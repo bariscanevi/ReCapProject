@@ -18,22 +18,36 @@ namespace Business.Concrete
 
         public void Add(Brand brand)
         {
-            _brandDal.Add(brand);
+            if (brand.BrandName.Length>2)
+            {
+                _brandDal.Add(brand);
+            }
+            else
+            {
+                Console.WriteLine("Lütfen Girdiğiniz Bilgileri Kontrol Edin");
+            }
         }
 
-        public void Delete(int brand)
+        public void Delete(Brand brand)
         {
             _brandDal.Delete(brand);
         }
 
-        public List<Brand> GetAllBrands()
+        public List<Brand> GetAll()
         {
-            return _brandDal.GetAllBrands();
+            return _brandDal.GetAll();
         }
 
-        public Brand GetBrandId(int brandId)
+        public void Update(Brand brand)
         {
-            return _brandDal.GetBrandId(brandId);
+            if (brand.BrandName.Length > 2)
+            {
+                _brandDal.Add(brand);
+            }
+            else
+            {
+                Console.WriteLine("Lütfen Girdiğiniz Bilgileri Kontrol Edin");
+            }
         }
     }
 }

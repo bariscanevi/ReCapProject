@@ -8,8 +8,8 @@ namespace Business.Abstract
     public interface IBrandService
     {
         void Add(Brand brand);
-        void Delete(int brand);
-        List<Brand> GetAllBrands();
-        Brand GetBrandId(int brandId);
+        void Delete(Brand brand);
+        void Update(Brand brand);
+        List<Brand> GetAll();
     }
 }
