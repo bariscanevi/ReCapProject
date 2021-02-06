@@ -9,6 +9,7 @@ namespace Console
     {
         static void Main(string[] args)
         {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
             System.Console.WriteLine("BrandId si 2 olan araçlar");
             CarManager carManager = new CarManager(new EfCarDal());
             foreach (var car in carManager.GetCarsByBrandId(2))
@@ -28,9 +29,11 @@ namespace Console
                 System.Console.WriteLine(car2.Description);
             }
 
-            System.Console.ReadLine();
-
-  
+            brandManager.Add(new Brand { BrandName = "OPEL" });
+            foreach (var brand in brandManager.GetAll())
+            {
+                System.Console.WriteLine(brand.BrandName);
+            }
 
         }
     }
