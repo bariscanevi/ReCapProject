@@ -23,7 +23,7 @@ namespace Console
 
             //carManager.Delete(new Car { CarId = 6 });
 
-            //carManager.Add(new Car { BrandId = 3, ColorId = 1, DailyPrice = 500, ModelYear = 2020, Description = "320D" });
+            //carManager.Add(new Car { BrandId = 3, ColorId = 2, DailyPrice = 700, ModelYear = 2020, Description = "520i" });
 
             //brandManager.Delete(new Brand { BrandName = "OPEL" });
 
@@ -33,50 +33,92 @@ namespace Console
 
             //CarGetAll(carManager);
 
-            GetCarDetails(carManager);
+            //GetCarDetails(carManager);
 
         }
 
         private static void GetCarDetails(CarManager carManager)
         {
-            foreach (var item in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+
+            if (result.Success)
             {
-                System.Console.WriteLine(item.BrandName + " " + item.Description + " " + item.ColorName + " " + item.DailyPrice);
+                foreach (var item in result.Data)
+                {
+                    System.Console.WriteLine(item.BrandName + " " + item.Description + " " + item.ColorName + " " + item.DailyPrice);
+                }
             }
+            else
+            {
+                System.Console.WriteLine(result.Message);
+            }
+            
         }
 
         private static void CarGetAll(CarManager carManager)
         {
-            foreach (var car2 in carManager.GetAll())
+            var result = carManager.GetAll();
+            if (result.Success)
             {
-                System.Console.WriteLine(car2.Description + " "+ car2.DailyPrice);
+                foreach (var car2 in result.Data)
+                {
+                    System.Console.WriteLine(car2.Description + " " + car2.DailyPrice);
+                }
             }
+            else
+            {
+                System.Console.WriteLine(result.Message);
+            }
+            
         }
 
         private static void BrandGetAll(BrandManager brandManager)
         {
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+            if (result.Success)
             {
-                System.Console.WriteLine(brand.BrandName);
+                foreach (var brand in result.Data)
+                {
+                    System.Console.WriteLine(brand.BrandName);
+                }
             }
+            
         }
 
         private static void GetCarsByColorId(CarManager carManager)
         {
+            var result = carManager.GetCarsByColorId(1);
             System.Console.WriteLine("ColorId si 1 olan araçlar");
-            foreach (var car1 in carManager.GetCarsByColorId(1))
+            if (result.Success)
             {
-                System.Console.WriteLine(car1.Description + car1.ModelYear);
+                foreach (var car1 in result.Data)
+                {
+                    System.Console.WriteLine(car1.Description + car1.ModelYear);
+                }
             }
+            else
+            {
+                System.Console.WriteLine(result.Message);
+            }
+            
         }
 
         private static void GetByBrandId(CarManager carManager)
         {
+            var result = carManager.GetCarsByBrandId(2);
             System.Console.WriteLine("BrandId si 2 olan araçlar");
-            foreach (var car in carManager.GetCarsByBrandId(2))
+            if (result.Success)
             {
-                System.Console.WriteLine(car.Description + " " + car.DailyPrice + " " + car.ModelYear);
+                foreach (var car in result.Data)
+                {
+                    System.Console.WriteLine(car.Description + " " + car.DailyPrice + " " + car.ModelYear);
+                }
             }
+            else
+            {
+                System.Console.WriteLine(result.Message);
+            }
+            
         }
     }
 }
