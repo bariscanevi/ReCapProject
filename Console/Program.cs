@@ -12,12 +12,24 @@ namespace Console
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             CarManager carManager = new CarManager(new EfCarDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            
+            
+            GetRentalDetails(rentalManager);
+
+            //var result = rentalManager.Add(new Rental { CarId = 2, CustomerId = 2, RentDate = DateTime.Now });
+            //System.Console.WriteLine(result.Message);
+
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //userManager.Add(new User { FirstName = "Akın", Email = "ay@", LastName = "Yıldız", Password = "ay" });
 
             //GetByBrandId(carManager);
 
             //GetCarsByColorId(carManager);
 
-            //brandManager.Add(new Brand { BrandName = "SKODA" });
+            //var result= brandManager.Add(new Brand { BrandName = "TESLA" });
+            //System.Console.WriteLine(result.Message);
 
             //BrandGetAll(brandManager);
 
@@ -35,6 +47,18 @@ namespace Console
 
             //GetCarDetails(carManager);
 
+        }
+
+        private static void GetRentalDetails(RentalManager rentalManager)
+        {
+            var result = rentalManager.GetRentalDetails();
+            if (result.Success)
+            {
+                foreach (var item in result.Data)
+                {
+                    System.Console.WriteLine(item.FirstName + " " + item.LastName + " " + item.CompanyName + " " + item.Description + " " + item.RentDate);
+                }
+            }
         }
 
         private static void GetCarDetails(CarManager carManager)
