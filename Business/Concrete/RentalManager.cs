@@ -50,18 +50,19 @@ namespace Business.Concrete
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
-            var result = _rentalDal.GetRentalDetails();
-            if (result.Count == 0)
-            {
-                return new ErrorDataResult<List<RentalDetailDto>>("Kirada Bulunan Araç Yok");
-            }
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
         public IResult Update(Rental rental)
         {
-            _rentalDal.Update(rental);
-            return new SuccessResult("Güncellendi");
+            var result = _rentalDal.Get(r => r.Id == rental.Id);
+            if (result!=null)
+            {
+                _rentalDal.Update(rental);
+                return new SuccessResult("Güncellendi");
+            }
+            return new ErrorResult("Hata");
+            
         }
     }
 }

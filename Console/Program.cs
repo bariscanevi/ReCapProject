@@ -14,12 +14,19 @@ namespace Console
             ColorManager colorManager = new ColorManager(new EfColorDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            
+
+
+
+            //var result = rentalManager.Update(new Rental { Id=1, ReturnDate=DateTime.Now, RentDate=new DateTime(2021,02,13,00,00,00), CarId=4, CustomerId=1 });
+            //System.Console.WriteLine(result.Message);
+
+
+            //var result = rentalManager.Add(new Rental { CarId = 4, CustomerId = 1002, RentDate = DateTime.Now });
+            //System.Console.WriteLine(result.Message);
+
+            //rentalManager.Delete(new Rental { Id = 6 });
             
             GetRentalDetails(rentalManager);
-
-            //var result = rentalManager.Add(new Rental { CarId = 2, CustomerId = 2, RentDate = DateTime.Now });
-            //System.Console.WriteLine(result.Message);
 
             //UserManager userManager = new UserManager(new EfUserDal());
             //userManager.Add(new User { FirstName = "Akın", Email = "ay@", LastName = "Yıldız", Password = "ay" });
@@ -56,7 +63,7 @@ namespace Console
             {
                 foreach (var item in result.Data)
                 {
-                    System.Console.WriteLine(item.FirstName + " " + item.LastName + " " + item.CompanyName + " " + item.Description + " " + item.RentDate);
+                    System.Console.WriteLine(item.FirstName + " " + item.LastName + " " + item.CompanyName + " " + item.Description + " " + item.RentDate+" "+item.ReturnDate);
                 }
             }
         }
