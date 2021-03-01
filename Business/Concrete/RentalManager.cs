@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,10 +24,10 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
-            if (result != null)
+            IResult result = BusinessRules.Run(CheckIfReturnDate(rental.CarId));
+            if (result!=null)
             {
-                return new ErrorResult("Hata");
+                return result;
             }
 
             _rentalDal.Add(rental);
@@ -59,14 +60,24 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
-            var result = _rentalDal.Get(r => r.Id == rental.Id);
+            IResult result = BusinessRules.Run(CheckIfReturnDate(rental.CarId));
             if (result!=null)
             {
-                _rentalDal.Update(rental);
-                return new SuccessResult("Güncellendi");
+                return result;
             }
-            return new ErrorResult("Hata");
-            
+
+            _rentalDal.Update(rental);
+            return new SuccessResult("Güncellendi");
+        }
+
+        private IResult CheckIfReturnDate(int carId)
+        {
+            var result = _rentalDal.Get(r => r.CarId == carId && r.ReturnDate == null);
+            if (result != null)
+            {
+                return new ErrorResult("Hata");
+            }
+            return new SuccessResult();
         }
     }
 }
