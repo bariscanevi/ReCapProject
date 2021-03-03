@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
@@ -21,6 +22,7 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
@@ -42,6 +44,7 @@ namespace Business.Concrete
             return new SuccessResult("Kiralama İptal Edildi");
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<Rental>> GetAllRental()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());

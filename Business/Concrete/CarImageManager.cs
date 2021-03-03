@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.FileHelper;
 using Core.Utilities.Results;
@@ -31,7 +32,7 @@ namespace Business.Concrete
             carImage.ImagePath = FileHelper.Add(formFile);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarImageAdded);
         }
 
         public IResult Delete(CarImage carImage)
@@ -45,7 +46,7 @@ namespace Business.Concrete
             }
 
             _carImageDal.Delete(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarImageDeleted);
         }
 
         public IDataResult<CarImage> Get(int id)
@@ -64,7 +65,7 @@ namespace Business.Concrete
             carImage.ImagePath = FileHelper.Update(oldpath, file);
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarImageUpdated);
         }
 
         private IResult CheckIfImageLimitExceeded(int id)
@@ -72,7 +73,7 @@ namespace Business.Concrete
             var carImagecount = _carImageDal.GetAll(c => c.CarId == id).Count;
             if (carImagecount > 5)
             {
-                return new ErrorResult();
+                return new ErrorResult(Messages.ImageLimited);
             }
             return new SuccessResult();
         }
